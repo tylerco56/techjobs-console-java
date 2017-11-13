@@ -62,7 +62,6 @@ public class JobData {
      *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
-     *
      * @param column   Column that should be searched.
      * @param value Value of teh field to search for
      * @return List of all jobs matching the criteria
@@ -73,16 +72,22 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-        //searchvalue = "." + searchvalue + ".";
+
 
         for (HashMap<String, String> row : allJobs) {
+
             for (Map.Entry<String, String> description : row.entrySet()) {
 
-                for Character letters ""   description.getValue();
+                String lower_value = description.getValue().toLowerCase();
+                String lower_searchvalue = searchvalue.toLowerCase();
 
-                if (description.getValue().equals(searchvalue)){
+
+                if (lower_value.contains(lower_searchvalue)) {
+
                     jobs.add(row);
+                    break;
                 }
+
             }
         }
 
@@ -97,16 +102,22 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
 
+            aValue = aValue.toLowerCase();
+            value = value.toLowerCase();
+
             if (aValue.contains(value)) {
                 jobs.add(row);
+
             }
         }
 
         return jobs;
+
     }
 
     /**
